@@ -1,0 +1,32 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;ffmodel&gt;">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../test" />
+      <root url="file://$PROJECT_DIR$/../../../golang.org" />
+      <root url="file://$PROJECT_DIR$/../../../qiniupkg.com" />
+      <root url="file://$PROJECT_DIR$/../.." />
+      <root url="file://$PROJECT_DIR$/../../../google.golang.org" />
+      <root url="file://$PROJECT_DIR$/../../../code.xiaojukeji.com" />
+      <root url="file://$PROJECT_DIR$/../../../cms-admin" />
+      <root url="file://$PROJECT_DIR$/../../../git.xiaojukeji.com" />
+      <root url="file://$PROJECT_DIR$/../../../gopkg.in" />
+      <root url="file://$PROJECT_DIR$/../../../opms" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../../../test" />
+      <root url="file://$PROJECT_DIR$/../../../golang.org" />
+      <root url="file://$PROJECT_DIR$/../../../qiniupkg.com" />
+      <root url="file://$PROJECT_DIR$/../.." />
+      <root url="file://$PROJECT_DIR$/../../../google.golang.org" />
+      <root url="file://$PROJECT_DIR$/../../../code.xiaojukeji.com" />
+      <root url="file://$PROJECT_DIR$/../../../cms-admin" />
+      <root url="file://$PROJECT_DIR$/../../../git.xiaojukeji.com" />
+      <root url="file://$PROJECT_DIR$/../../../gopkg.in" />
+      <root url="file://$PROJECT_DIR$/../../../opms" />
+    </SOURCES>
+    <excluded>
+      <root url="file://$PROJECT_DIR$" />
+    </excluded>
+  </library>
+</component>
