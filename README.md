@@ -7,17 +7,17 @@ SHOW CREATE TABLE tb_test
 
 ```
 ```sql
-CREATE TABLE `tb_url` (
-  `id` int(11) NOT NULL,
-  `int_field` int(11) NOT NULL COMMENT '整型',
-  `date_field` date NOT NULL,
-  `datetime_filed` datetime NOT NULL,
-  `timestamp_filed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `text_field` text COLLATE utf8_bin NOT NULL,
-  `double_filed` double NOT NULL,
-  `tiny_int` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+CCREATE TABLE `test_info` (
+   `id` int(11) NOT NULL,
+   `int_field` int(11) NOT NULL COMMENT '整型',
+   `date_field` date NOT NULL,
+   `datetime_filed` datetime NOT NULL,
+   `timestamp_filed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   `text_field` text COLLATE utf8_bin NOT NULL,
+   `double_filed` double NOT NULL,
+   `tiny_int` tinyint(1) NOT NULL,
+   PRIMARY KEY (`id`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 ```
 保存DLL为test.sql文件
 
@@ -29,6 +29,7 @@ ffmodel test.sql >test_model.go
 生成的结果为
 ```go
 
+
 package main
 
 import (
@@ -37,7 +38,7 @@ import (
 )
 
 // ==========================
-type TbURLModel struct {
+type TestInfoModel struct {
 	
 	ID	int32 `orm:"pk;colunm(id)" json:"id"`  
 	IntField	int32 `orm:"colunm(int_field)" json:"int_field"` // 整型 
@@ -50,41 +51,41 @@ type TbURLModel struct {
 }
 
 func init() {
-	orm.RegisterModel(new(TbURLModel))
+	orm.RegisterModel(new(TestInfoModel))
 }
 
-func (*TbURLModel) TableName() string {
-	return "tb_url"
+func (*TestInfoModel) TableName() string {
+	return "test_info"
 }
 
-func AddTbURL(obj *TbURLModel) error {
+func AddTestInfo(obj *TestInfoModel) error {
 	o := orm.NewOrm()
 	_, err := o.Insert(obj)
 	return err
 }
 
-func DelTbURL(id int32) error {
+func DelTestInfo(id int32) error {
 	o := orm.NewOrm()
-	_, err := o.Delete(&TbURLModel{ID: id})
+	_, err := o.Delete(&TestInfoModel{ID: id})
 	return err
 }
 
-func GetTbURL(id int32) (*TbURLModel, error) {
+func GetTestInfo(id int32) (*TestInfoModel, error) {
 	o := orm.NewOrm()
-	obj := &TbURLModel{ID: id}
+	obj := &TestInfoModel{ID: id}
 	err := o.Read(obj, "ID")
 	return obj, err
 }
 
-func UpdateTbURL(obj *TbURLModel) error {
+func UpdateTestInfo(obj *TestInfoModel) error {
 	o := orm.NewOrm()
 	_, err := o.Update(obj)
 	return err
 }
 
-func QueryTbURL(keys []string, values []interface{}, page_no, page_count int) ([]*TbURLModel, int64, error){
+func QueryTestInfo(keys []string, values []interface{}, page_no, page_count int) ([]*TestInfoModel, int64, error){
 	o := orm.NewOrm()
-	qs := o.QueryTable("tb_url")
+	qs := o.QueryTable("test_info")
 	if len(keys) != len(values) {
 		return nil, 0, fmt.Errorf("key[%d] value[%d] not equal", len(keys), len(values))
 	}
@@ -99,7 +100,7 @@ func QueryTbURL(keys []string, values []interface{}, page_no, page_count int) ([
 		page_count = 100
 	}
 
-	var objs []*TbURLModel
+	var objs []*TestInfoModel
 	_, err := qs.Limit(page_count, page_count * page_no).All(&objs)
 
 	if err != nil {
@@ -111,4 +112,7 @@ func QueryTbURL(keys []string, values []interface{}, page_no, page_count int) ([
 }
 
 // ==========================
+
+
+
 ```
