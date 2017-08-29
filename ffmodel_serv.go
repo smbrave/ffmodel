@@ -25,7 +25,7 @@ func init() {
 	orm.RegisterModel(new({{.ModelName}}Model))
 }
 
-func (*{{.ModelName}}Model) TableName() string {
+func (obj *{{.ModelName}}Model) TableName() string {
 	return "{{.TableName}}"
 }
 
@@ -121,10 +121,10 @@ func DDL2Model(ddl_string string) (string, error) {
 		if field.FieldComment != "" {
 			tmp.Comment = "// " + field.FieldComment
 		}
-		tmp.Tag = fmt.Sprintf("`orm:\"colunm(%s)\" json:\"%s\"`", field.FieldName, strings.ToLower(field.FieldName))
+		tmp.Tag = fmt.Sprintf("`orm:\"column(%s)\" json:\"%s\"`", field.FieldName, strings.ToLower(field.FieldName))
 
 		if field.FieldName == ddl.PkName {
-			tmp.Tag = fmt.Sprintf("`orm:\"pk;colunm(%s)\" json:\"%s\"`", field.FieldName, strings.ToLower(field.FieldName))
+			tmp.Tag = fmt.Sprintf("`orm:\"pk;column(%s)\" json:\"%s\"`", field.FieldName, strings.ToLower(field.FieldName))
 		}
 
 		fields = append(fields, tmp)
