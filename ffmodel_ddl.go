@@ -116,6 +116,11 @@ func ParseDDL(ddl_string string) (*TableDDL, error) {
 			continue
 		}
 
+		//唯一主键
+		if strings.ToUpper(parts[0]) == "UNIQUE" {
+			continue
+		}
+
 		// 表信息
 		if parts[0] == ")" {
 			ddl.Engine = strings.Split(parts[1], "=")[1]

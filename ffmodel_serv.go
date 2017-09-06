@@ -89,7 +89,7 @@ func Query{{.ModelName}}(keys []string, values []interface{}, page_no, page_coun
 // 定义函数unescaped
 func unescaped(x string) interface{} { return template.HTML(x) }
 
-func DDL2Model(ddl_string string) (string, error) {
+func DDL2Model(ddl_string string, json_tag, orm_tag bool) (string, error) {
 	ddl, err := ParseDDL(ddl_string)
 	if err != nil {
 		return "", err
@@ -121,12 +121,20 @@ func DDL2Model(ddl_string string) (string, error) {
 		if field.FieldComment != "" {
 			tmp.Comment = "// " + field.FieldComment
 		}
-		tmp.Tag = fmt.Sprintf("`orm:\"column(%s)\" json:\"%s\"`", field.FieldName, strings.ToLower(field.FieldName))
-
-		if field.FieldName == ddl.PkName {
-			tmp.Tag = fmt.Sprintf("`orm:\"pk;column(%s)\" json:\"%s\"`", field.FieldName, strings.ToLower(field.FieldName))
+		var tags []string
+		if json_tag {
+			tags = append(tags, fmt.Sprintf("json:\"%s\"", field.FieldName))
 		}
-
+		if orm_tag {
+			if field.FieldName == ddl.PkName {
+				tags = append(tags, fmt.Sprintf("orm:\"pk;column(%s)\"", field.FieldName))
+			} else {
+				tags = append(tags, fmt.Sprintf("orm:\"column(%s)\"", field.FieldName))
+			}
+		}
+		if len(tags) != 0 {
+			tmp.Tag = fmt.Sprintf("`%s`", strings.Join(tags, " "))
+		}
 		fields = append(fields, tmp)
 
 	}
