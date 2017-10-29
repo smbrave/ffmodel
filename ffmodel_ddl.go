@@ -123,8 +123,8 @@ func ParseDDL(ddl_string string) (*TableDDL, error) {
 
 		// 表信息
 		if parts[0] == ")" {
-			ddl.Engine = strings.Split(parts[1], "=")[1]
-			ddl.Charset = strings.Split(parts[3], "=")[1]
+			//ddl.Engine = strings.Split(parts[1], "=")[1]
+			//ddl.Charset = strings.Split(parts[3], "=")[1]
 			continue
 		}
 
