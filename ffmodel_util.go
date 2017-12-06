@@ -79,10 +79,12 @@ func camelString(s string) string {
 		if len(o) == 0 {
 			continue
 		}
+        /*
 		if _, ok := LintGonicMapper[strings.ToUpper(o)]; ok {
 			data += strings.ToUpper(o)
 			continue
 		}
+        */
 		data += strings.ToUpper(string(o[0]))
 		if len(o) > 1 {
 			data += strings.ToLower(o[1:])
