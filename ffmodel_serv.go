@@ -37,14 +37,14 @@ func Add{{.ModelName}}(obj *{{.ModelName}}Model) error {
 
 func Del{{.ModelName}}(id {{.PkType}}) error {
 	o := orm.NewOrm()
-	_, err := o.Delete(&{{.ModelName}}Model{ID: id})
+	_, err := o.Delete(&{{.ModelName}}Model{Id: id})
 	return err
 }
 
 func Get{{.ModelName}}(id {{.PkType}}) (*{{.ModelName}}Model, error) {
 	o := orm.NewOrm()
-	obj := &{{.ModelName}}Model{ID: id}
-	err := o.Read(obj, "ID")
+	obj := &{{.ModelName}}Model{Id: id}
+	err := o.Read(obj, "Id")
 	return obj, err
 }
 
