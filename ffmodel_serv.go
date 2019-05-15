@@ -16,20 +16,20 @@ import (
 )
 
 // ==========================
-type {{.ModelName}}Model struct {
+type {{.ModelName}} struct {
 	{{range .FieldContent}}
 	{{.FieldName}}	{{.FieldType}} {{.Tag|unescaped}} {{.Comment}} {{end}}
 }
 
 func init() {
-	orm.RegisterModel(new({{.ModelName}}Model))
+	orm.RegisterModel(new({{.ModelName}}))
 }
 
-func (obj *{{.ModelName}}Model) TableName() string {
+func (obj *{{.ModelName}}) TableName() string {
 	return "{{.TableName}}"
 }
 
-func Add{{.ModelName}}(obj *{{.ModelName}}Model) error {
+func Add{{.ModelName}}(obj *{{.ModelName}}) error {
 	o := orm.NewOrm()
 	_, err := o.Insert(obj)
 	return err
@@ -37,42 +37,37 @@ func Add{{.ModelName}}(obj *{{.ModelName}}Model) error {
 
 func Del{{.ModelName}}(id {{.PkType}}) error {
 	o := orm.NewOrm()
-	_, err := o.Delete(&{{.ModelName}}Model{Id: id})
+	_, err := o.Delete(&{{.ModelName}}{Id: id})
 	return err
 }
 
-func Get{{.ModelName}}(id {{.PkType}}) (*{{.ModelName}}Model, error) {
+func Get{{.ModelName}}(id {{.PkType}}) (*{{.ModelName}}, error) {
 	o := orm.NewOrm()
-	obj := &{{.ModelName}}Model{Id: id}
+	obj := &{{.ModelName}}{Id: id}
 	err := o.Read(obj, "Id")
 	return obj, err
 }
 
-func Update{{.ModelName}}(obj *{{.ModelName}}Model) error {
+func Update{{.ModelName}}(obj *{{.ModelName}}) error {
 	o := orm.NewOrm()
 	_, err := o.Update(obj)
 	return err
 }
 
-func Query{{.ModelName}}(keys []string, values []interface{}, page_no, page_count int) ([]*{{.ModelName}}Model, int64, error){
+func Query{{.ModelName}}(page, page int) ([]*{{.ModelName}}, int64, error){
 	o := orm.NewOrm()
 	qs := o.QueryTable("{{.TableName}}")
-	if len(keys) != len(values) {
-		return nil, 0, fmt.Errorf("key[%d] value[%d] not equal", len(keys), len(values))
-	}
-	for i,_ := range keys {
-		qs = qs.Filter(keys[i], values[i])
-	}
-	if page_no == 0 {
-		page_no = 0
+	if page <= 0 {
+		page = 1
 	}
 
-	if page_count == 0 {
-		page_count = 100
+	if size <= 0 {
+		size = 10
 	}
 
-	var objs []*{{.ModelName}}Model
-	_, err := qs.Limit(page_count, page_count * page_no).All(&objs)
+	offset := (page - 1) * size
+	var objs []*{{.ModelName}}
+	_, err := qs.Limit(size, offset).All(&objs)
 
 	if err != nil {
 		return nil, 0, err
